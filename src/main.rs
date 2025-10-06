@@ -4,12 +4,29 @@ use num_prime::nt_funcs::{factorize, is_prime};
 use num_prime::{PrimalityTestConfig, RandPrime};
 
 fn cunningham_kind1(start: u128) -> u8 {
+    fn seek_back(mut k: u128) -> u128 {
+        let config = Some(PrimalityTestConfig::strict());
+        loop {
+            let k2 = (k - 1) >> 1;
+            if !is_prime(&k2, config).probably() {
+                break;
+            }
+            let c = factorize(k2);
+            if c.len() > 1 {
+                break;
+            }
+            k = k2;
+        }
+        return k;
+    };
+
     let mut n: u8 = 1;
-    let mut x: u128 = start;
+    let mut x: u128 = seek_back(start);
+    let config = Some(PrimalityTestConfig::strict());
 
     loop {
         x = (x << 1) + 1;
-        let p = is_prime(&x, Some(PrimalityTestConfig::strict())).probably();
+        let p = is_prime(&x, config).probably();
         if !p {
             break;
         }
@@ -36,7 +53,7 @@ fn main() {
                 let p1: u128 = rng.gen_prime(75, None);
                 if p1 > best {
                     let c = cunningham_kind1(p1);
-                    if c > 6 {
+                    if c > 4 {
                         println!("{} {}", p1, c);
                     }
                 }
