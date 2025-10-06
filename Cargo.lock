@@ -163,6 +163,7 @@ name = "primefun"
 version = "0.1.0"
 dependencies = [
  "num-prime",
+ "rand",
 ]
 
 [[package]]

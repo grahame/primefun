@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 num-prime = "0.4.4"
+rand = "0.8.4"
