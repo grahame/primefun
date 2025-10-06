@@ -54,7 +54,7 @@ fn main() {
                 if p1 > best {
                     let c = cunningham_kind1(p1);
                     if c > 4 {
-                        println!("{} {}", p1, c);
+                        println!("{} {}", c, p1);
                     }
                 }
             }
